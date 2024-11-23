@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body>
+    <section id="reg">
+        
+      <aside>
+        <h1>SIGN IN</h1>
+        <%
+            if(typeof message!=='undefined'){
+                %>
+                    <h4 style="color:red;"><%= message %></h4>
+                <%
+            }
+        %>
+        <form action="/" method ="POST">
+          <div id="pgMsg"></div>
+          <div class="formGroup" id="eMail">
+            <svg
+              id="Layer_1"
+              data-name="Layer 1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 248.66 247.56"
+            >
+              <path
+                d="M2.24,90.15V193.4a31.17,31.17,0,0,0,5,17.33c.07.09.13.19.2.29a20.57,20.57,0,0,0,17,8.79H227.62s13.4,0,18.23-14.83a30,30,0,0,0,1.37-9.37V90.15s-48.62,38.07-101.38,72c0,0-15.83,13.57-43.35-.38Z"
+              />
+              <path
+                d="M109.28,144.05s15.07,13.95,32,0l86.27-60.5a49.73,49.73,0,0,0,14.33-15.2c4.36-7.32,7.65-17.28,3.41-27.85a7,7,0,0,0-1-1.68h0a29.27,29.27,0,0,0-23.05-11.23H26S13.64,27.45,5.65,39.71C1.11,46.66,2,56,5.41,63.55A48.64,48.64,0,0,0,19.2,81.11Z"
+              />
+            </svg>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email"
+              onchange="fieldValid(event, 'eMail')"
+              onkeyup="fieldValid(event, 'eMail')"
+            />
+          </div>
+          <div class="formGroup" id="pass">
+            <svg
+              version="1.1"
+              baseProfile="tiny"
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="42px"
+              height="42px"
+              viewBox="-0.5 0.5 42 42"
+            >
+              <g>
+                <path
+                  class="noFill"
+                  fill="none"
+                  d="M23.68,28.484c0-1.76-1.42-3.18-3.18-3.18s-3.18,1.42-3.18,3.18c0,1.412,0.91,2.6,2.17,3.02l-1.99,4.98h6
+		l-1.99-4.98C22.77,31.084,23.68,29.895,23.68,28.484z"
+                />
+                <path
+                  d="M20.5,6.411c5.98,0,8.67,5.073,9,10.073h5c-0.09-9-4.67-14.903-14-14.983c-9.27-0.09-14,6.983-14,14.983h4.969
+		C11.729,11.484,14.3,6.411,20.5,6.411z"
+                />
+                <path
+                  d="M34.5,18.5h-28c-2.41,0-3,0.655-3,2.984v17c0,2.49,0.561,3,3,3h28c2.609,0,3-0.471,3-3v-17
+		C37.5,19.026,37.04,18.5,34.5,18.5z M23.5,36.484h-6l1.99-4.98c-1.26-0.42-2.17-1.607-2.17-3.02c0-1.76,1.42-3.18,3.18-3.18
+		s3.18,1.42,3.18,3.18c0,1.41-0.91,2.6-2.17,3.02L23.5,36.484z"
+                />
+              </g>
+            </svg>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onchange="fieldValid(event, 'pass')"
+              onkeyup="fieldValid(event, 'pass')"
+            />
+          </div>
+          <button type="submit" value ="Login">LOGIN</button>
+          <h3>Don't Have Account? <a href="/register">SIGN UP</a></h3>
+        </form>
+      </aside>
+      
+    </section>
+    
+  </body>
+</html>

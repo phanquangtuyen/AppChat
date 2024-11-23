@@ -1,0 +1,132 @@
+<%- include('layouts/header.ejs') %>
+<div class="main_friend">
+<div class="currentplaying">
+    <p class="heading">Danh sách bạn bè</p>
+  </div>
+  
+        <%
+             if (users.length > 0) {
+                 for (let i = 0; i < users.length; i++) {
+                    %>
+                    <div class="loader" data-id="<%= users[i]['_id'] %>">
+                        <div class="song">
+                      <p class="name"> <%= users[i]['name'] %></p>
+                      <%
+                            if(users[i]['is_online']==1){
+                                %>
+                                <p class="artist-online" id="<%= users[i]['_id']%>-status">Online</p>
+                                <%
+                            }else{
+                                %>
+                                <p class="artist-offline" id="<%= users[i]['_id']%>-status">Offline</p>
+                                <%
+                            }
+                        %>
+                      </div>
+                     <div class="albumcover"> <img src="<%= 'http://127.0.0.1:3000/' + users[i]['image'] %>" alt="" width="50px" height="50px"></div>
+
+                        
+                    </div>
+                     <%
+                }
+            }
+        %>
+        </div>
+
+<div class="card-container" >
+  <div class="card-header">
+    <div class="img-avatar">
+        <img src="" alt="" width="50px" height="50px"/>
+    </div>
+    <div class="text-chat">Chat</div>
+  </div>
+  <div class="card-body" >
+    <div class="messages-container" id = "chat-container">
+        
+        
+    </div>
+    <div class="message-input" id = "chat-form">
+      <form>
+        <textarea placeholder="Type your message here" class="message-send" id = "message"></textarea>
+        <button type="submit" class="button-send">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    var receiver_id;
+    var sender_id = '<%= user._id %>';
+    var socket = io('/user-namespace',{
+        auth:{
+            token: '<%= user._id %>'
+        }
+    });
+
+
+    $(document).ready(function(){
+        $('.loader').click(function(){
+            var userId = $(this).attr('data-id');
+            receiver_id = userId;
+        })
+    });
+    //update user online status
+    socket.on('getOnlineUser', function(data){
+        $('#'+data.user_id+'-status').text('Online');
+        $('#'+data.user_id+'-status').removeClass('artist-offline');
+        $('#'+data.user_id+'-status').addClass('artist-online');
+    });
+
+    socket.on('getOfflineUser', function(data){
+        $('#'+data.user_id+'-status').text('Offline');
+        $('#'+data.user_id+'-status').addClass('artist-offline');
+        $('#'+data.user_id+'-status').removeClass('artist-online');
+        
+    });
+
+    $('#chat-form').submit(function(event){
+        event.preventDefault();
+
+        var message = $('#message').val();
+
+        $.ajax({
+            url:'/save-chat',
+            type: 'POST',
+            data:{sender_id:sender_id, receiver_id:receiver_id,message:message},
+            success:function(response){
+                if(response.success){
+                    console.log(response);
+                    $('#message').val('');
+                    let chat = response.data.message;
+                    let html = `
+                        <div class="message-box right">
+                            <p>${chat}</p>
+                        </div>                    
+                    `;
+                    $('#chat-container').append(html);
+                    socket.emit('newChat',response.data);
+                }else{
+                    alert(response.mgs);
+                
+                }
+            }
+        });
+    });
+
+    socket.on('loadNewChat',function(data){
+        if(sender_id == data.receiver_id  && receiver_id ==data.sender_id){
+            let html =`
+            <div class="message-box left">
+                <p>${data.message}</p>
+            </div>
+        `;
+        $('#chat-container').append(html);
+        }
+        
+    });
+</script>
+
+<%- include('layouts/footer.ejs') %>
+
+
