@@ -349,13 +349,22 @@ body {
 }
 
 .messages-container {
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 70vh; /* Đặt chiều cao cố định */
+  overflow-y: auto; /* Bật cuộn theo chiều dọc nếu nội dung vượt quá chiều cao */
+  scroll-behavior: smooth
 }
 
 .message-box {
   padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  
 }
 
 .message-box.left {
@@ -363,13 +372,14 @@ body {
   color: black;
   font-size: 13px;
   left: 0;
+  align-self: flex-start;
 }
 
 .message-box.right {
   background-color: #333;
   color: #fff;
   font-size: 13px;
-  
+  align-self: flex-end;
   right: 0;
 }
 

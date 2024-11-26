@@ -35,10 +35,10 @@
 
 <div class="card-container" >
   <div class="card-header">
-    <div class="img-avatar">
-        <img src="" alt="" width="50px" height="50px"/>
+    <div class="img-avatar" >
+        <img id ="chat-avatar" src="" alt="" width="50" height="50"/>
     </div>
-    <div class="text-chat">Chat</div>
+    <div class="text-chat" id ="chat-name">Chat</div>
   </div>
   <div class="card-body" >
     <div class="messages-container" id = "chat-container">
@@ -67,9 +67,25 @@
 
     $(document).ready(function(){
         $('.loader').click(function(){
+            console.log("Đã click vào tên bạn");
             var userId = $(this).attr('data-id');
             receiver_id = userId;
-        })
+
+            var userName = $(this).find('.name').text();  // Lấy tên người
+        var userImage = $(this).find('.albumcover img').attr('src');  // Lấy đường dẫn hình ảnh
+
+        // Cập nhật tên và ảnh trong khu vực chat
+        console.log("Cập nhật tên:", userName);
+        console.log("Cập nhật ảnh:", userImage);
+
+        $('#chat-name').text(userName);  // Cập nhật tên người
+        $('#chat-avatar').attr('src', userImage);  // Cập nhật ảnh
+
+            socket.emit('existsChat',{
+                sender_id:sender_id,
+                receiver_id:receiver_id
+            });
+        });
     });
     //update user online status
     socket.on('getOnlineUser', function(data){
@@ -106,6 +122,8 @@
                     `;
                     $('#chat-container').append(html);
                     socket.emit('newChat',response.data);
+
+                    scrollChat();
                 }else{
                     alert(response.mgs);
                 
@@ -123,8 +141,42 @@
         `;
         $('#chat-container').append(html);
         }
+        scrollChat();
         
     });
+
+    //load old chats
+    socket.on('loadChats',function(data){
+        $('#chat-container').html('');
+
+        var chats = data.chats;
+        let html ='';
+
+        for(let x = 0; x < chats.length;x++){
+            let addClass ='';
+            if(chats[x]['sender_id'] == sender_id){
+                addClass='message-box right';
+            }
+            else{
+                addClass = 'message-box left';
+            }
+
+            html +=`
+                <div class='${addClass}'>
+                            <p>${chats[x]['message']}</p>
+                        </div>  
+            `;
+        }
+        $('#chat-container').append(html);
+
+        scrollChat();
+    });
+
+    function scrollChat(){
+        $('#chat-container').animate({
+            scrollTop: $('#chat-container').offset().top + $('#chat-container')[0].scrollHeight
+        },0);
+    }
 </script>
 
 <%- include('layouts/footer.ejs') %>
