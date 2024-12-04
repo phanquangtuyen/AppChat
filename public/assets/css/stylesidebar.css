@@ -169,15 +169,29 @@ body {
 }
 
 /* css của list friend */
-
+.main_list{
+  display: flex;
+  flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+  align-items: flex-start; /* Căn chỉnh các phần tử theo chiều ngang (bên trái) */
+  gap: 1em;
+}
 .main_friend {
   background-color: rgba(192,192,192);
   max-width: 250px;
-  height: 100%;
+  height: 40vh;
   padding: 1em;
   padding-bottom: 1.1em;
   border-radius: 15px;
   margin: 0;
+  overflow-y: auto;
+}
+.main_group{
+  background-color: rgba(192,192,192);
+  max-width: 250px;
+  height: 40vh; /* 50% chiều cao cửa sổ */
+  padding: 1em;
+  padding-bottom: 1.1em;
+  border-radius: 15px;
   overflow-y: auto;
 }
 
@@ -410,4 +424,40 @@ body {
 .message-input .button-send:hover {
   background-color: #f1f1f1;
   color: #333;
+}
+
+
+/* button add group  */
+/* From Uiverse.io by Yaya12085 */ 
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border-radius: calc(45px/2);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background: linear-gradient(144deg,#af40ff,#5b42f3 50%,#00ddeb);
+  margin-left: 60px;
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  font-size: 2.2em;
+  color: white;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px ,2px);
 }

@@ -54,6 +54,7 @@ const login = async(req,res)=>{
             const passwordMatch = await  bcrypt.compare(password,userData.password);
             if(passwordMatch){
                 req.session.user = userData;
+                res.cookie(`user`,JSON.stringify(userData));
                 res.redirect('/dashboard');
             }
             else{
@@ -72,6 +73,7 @@ const login = async(req,res)=>{
 const logout = async(req,res)=>{
     try {
 
+        res.clearCookie('user');
         req.session.destroy();
         res.redirect('/');
         
@@ -120,6 +122,17 @@ const deleteChat = async(req,res)=>{
     }
 }
 
+const loadGroups = async(req, res)=>{
+    try {
+
+        
+        res.render('group');
+        
+    } catch (error) {
+        console.log(error.massage);
+    }
+}
+
 module.exports= {
     registerLoad,
     register,
@@ -128,5 +141,6 @@ module.exports= {
     login,
     logout,
     saveChat,
-    deleteChat
+    deleteChat,
+    loadGroups
 }

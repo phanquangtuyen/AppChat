@@ -10,6 +10,8 @@ const session = require('express-session');
 const{SESSION_SECRET} = process.env;
 user_route.use(session({ secret:SESSION_SECRET}))
 
+const cookieParser = require('cookie-parser');
+user_route.use(cookieParser());
 
 user_route.use(bodyParser.json()); //json(): Xử lý các request có dữ liệu dạng JSON.
 user_route.use(bodyParser.urlencoded({ extended:true} )); //urlencoded({ extended: true }): Xử lý dữ liệu gửi lên từ form với định dạng application/x-www-form-urlencoded.
@@ -51,6 +53,8 @@ user_route.get('/dashboard',auth.isLogin,userController.loadDashboard);
 user_route.post('/save-chat',userController.saveChat);
 
 user_route.post('/delete-chat', userController.deleteChat);
+
+user_route.get('/groups', auth.isLogin, userController.loadGroups);
 
 
 user_route.get('*',function(req,res){
