@@ -8,7 +8,14 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="/assets/css/stylesidebar.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js" integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Kiểm tra xem socket.io đã được load chưa
+    console.log('Socket.IO loaded:', typeof io !== 'undefined');
+  </script>
+  <% if (!locals.isVideoCall) { %>
+    <script src="/js/main.js"></script>
+  <% } %>
 </head>
 <body>
   <aside class="sidebar">

@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
-const Chat = require('../models/chatModel')
+const Chat = require('../models/chatModel');
+const Group = require('../models/groupModel');
 const bcrypt = require('bcrypt'); 
 
 const registerLoad = async(req,res)=>{
@@ -125,13 +126,61 @@ const deleteChat = async(req,res)=>{
 const loadGroups = async(req, res)=>{
     try {
 
-        
-        res.render('group');
+        const groups = await Group.find({ creator_id: req.session.user._id});
+        res.render('group',{groups:groups});
         
     } catch (error) {
         console.log(error.massage);
     }
 }
+
+const createGroup = async(req, res)=>{
+    try {
+
+        const group = new Group({
+            creator_id:req.body.user._id,
+            name: req.body.name,
+            image:'images/'+req.file.filename,
+            limit: req.body.limit
+        })
+        
+        await group.save();
+        const groups = await Group.find({ creator_id: req.session.user._id});
+        //res.render('dashboard',{message:req.body.name +'Tạo nhóm thành công!'});
+        res.redirect('/dashboard');
+        
+    } catch (error) {
+        console.log(error.massage);
+        
+    }
+}
+
+// Controller xử lý video call
+const getVideoCall = async (req, res) => {
+    try {
+        const receiverId = req.params.id;
+        
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+
+        const receiver = await User.findById(receiverId);
+        if (!receiver) {
+            return res.status(404).send('Không tìm thấy người dùng');
+        }
+
+        res.render('video-call', {
+            user: req.session.user,
+            receiver: receiver,
+            sender: req.session.user,
+            isVideoCall: true
+        });
+
+    } catch (error) {
+        console.error('Lỗi khi khởi tạo video call:', error);
+        res.status(500).send('Đã xảy ra lỗi server');
+    }
+};
 
 module.exports= {
     registerLoad,
@@ -142,5 +191,7 @@ module.exports= {
     logout,
     saveChat,
     deleteChat,
-    loadGroups
+    loadGroups,
+    createGroup, 
+    getVideoCall
 }

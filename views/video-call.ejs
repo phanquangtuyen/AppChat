@@ -1,0 +1,90 @@
+<%- include('layouts/header.ejs') %>
+
+<div id="video-call-container" data-caller-id="<%= sender._id %>">
+    <div class="video-info">
+        <h2>Cuộc gọi video với <%= receiver.name %></h2>
+        <p id="call-status">Đang kết nối...</p>
+    </div>
+    
+    <div class="video-streams">
+        <div class="local-video">
+            <video id="localVideo" autoplay muted></video>
+            <p>Bạn</p>
+        </div>
+        <div class="remote-video">
+            <video id="remoteVideo" autoplay></video>
+            <p><%= receiver.name %></p>
+        </div>
+    </div>
+
+    <div class="video-controls">
+        <button id="endCall" class="btn-end-call">Kết thúc cuộc gọi</button>
+        <button id="toggleMic" class="btn-toggle">Tắt/Bật mic</button>
+        <button id="toggleVideo" class="btn-toggle">Tắt/Bật camera</button>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    // Định nghĩa các biến cần thiết cho video-call.js
+    const senderId = '<%= sender._id %>';
+    const receiverId = '<%= receiver._id %>';
+</script>
+<script src="/js/script-video.js"></script>
+
+<style>
+  .video-call-container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+  }
+  
+  .video-streams {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+  }
+  
+  .local-video, .remote-video {
+      flex: 1;
+  }
+  
+  video {
+      width: 100%;
+      background: #000;
+      border-radius: 8px;
+  }
+  
+  .video-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+  }
+  
+  .btn-end-call {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  .btn-toggle {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  #call-status {
+      text-align: center;
+      color: #666;
+      margin: 10px 0;
+  }
+</style>
+
+<%- include('layouts/footer.ejs') %>

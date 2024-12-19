@@ -33,45 +33,7 @@
                 }
             %>
             </div>
-            <div class="main_group">
-              <div class="currentplaying">
-                  <p class="heading">Group</p>
-                  <button class="Btn">
-  
-                    <div class="sign">+</div>
-                    
-                    
-                  </button>
-                </div>
-                
-                      <%
-                           if (users.length > 0) {
-                               for (let i = 0; i < users.length; i++) {
-                                  %>
-                                  <div class="loader" data-id="<%= users[i]['_id'] %>">
-                                      <div class="song">
-                                    <p class="name"> <%= users[i]['name'] %></p>
-                                    <%
-                                          if(users[i]['is_online']==1){
-                                              %>
-                                              <p class="artist-online" id="<%= users[i]['_id']%>-status">Online</p>
-                                              <%
-                                          }else{
-                                              %>
-                                              <p class="artist-offline" id="<%= users[i]['_id']%>-status">Offline</p>
-                                              <%
-                                          }
-                                      %>
-                                    </div>
-                                   <div class="albumcover"> <img src="<%= 'http://127.0.0.1:3000/' + users[i]['image'] %>" alt="" width="50px" height="50px"></div>
-              
-                                      
-                                  </div>
-                                   <%
-                              }
-                          }
-                      %>
-                      </div>
+           
 </div>
 
 <div class="card-container" >
@@ -80,6 +42,9 @@
         <img id ="chat-avatar" src="" alt="" width="50" height="50"/>
     </div>
     <div class="text-chat" id ="chat-name">Chat</div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512" stroke-width="0" fill="currentColor" stroke="currentColor" class="video-icon" id="video-icon"  data-id="<%= user._id %>" >
+      <path d="M464 384.39a32 32 0 01-13-2.77 15.77 15.77 0 01-2.71-1.54l-82.71-58.22A32 32 0 01352 295.7v-79.4a32 32 0 0113.58-26.16l82.71-58.22a15.77 15.77 0 012.71-1.54 32 32 0 0145 29.24v192.76a32 32 0 01-32 32zM268 400H84a68.07 68.07 0 01-68-68V180a68.07 68.07 0 0168-68h184.48A67.6 67.6 0 01336 179.52V332a68.07 68.07 0 01-68 68z"></path>
+    </svg>
   </div>
   <div class="card-body" >
     <div class="messages-container" id = "chat-container">
@@ -95,7 +60,83 @@
   </div>
 </div>
 
+<!-- form create group -->
+<div class="login-box" id ="createForm">
+ 
+  <form action="/groups" enctype="multipart/form-data" method="POST">
+    
+    <div class="user-box">
+      <input type="text" name="name" required="">
+      <label>Tên Group</label>
+    </div>
+    <div class="user-box">
+      <input type="file" name="image" required>
+      
+    </div><center>
+      <div class="user-box">
+        <input type="number" min=1 name="limit" placeholder="Số người tham gia" required="">
+        
+      </div><center>
+    <button type="submit" class="button-create" >Create</button>
+    <button type="button" class="button-create">Close</button>
+  </form>
+</div>
 
+<div id="callModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Cuộc gọi đến</h3>
+        <p id="callModalText"></p>
+        <div class="modal-buttons">
+            <button id="acceptCall" class="btn-accept">Trả lời</button>
+            <button id="rejectCall" class="btn-reject">Từ chối</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.btn-accept {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-reject {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>
 
 <%- include('layouts/footer.ejs') %>
 

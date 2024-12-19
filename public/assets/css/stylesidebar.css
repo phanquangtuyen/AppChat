@@ -340,6 +340,7 @@ body {
   display: flex;
   align-items: center;
   padding-bottom: 10px;
+  
   border-bottom: 1px solid #ccc;
 }
 
@@ -425,7 +426,10 @@ body {
   background-color: #f1f1f1;
   color: #333;
 }
-
+.video-icon {
+  cursor: pointer;  /* Thêm cursor để biểu tượng video giống như một nút nhấn */
+  margin-left: 10px;  /* Khoảng cách giữa biểu tượng video và tên chat */
+}
 
 /* button add group  */
 /* From Uiverse.io by Yaya12085 */ 
@@ -461,3 +465,170 @@ body {
 .Btn:active {
   transform: translate(2px ,2px);
 }
+
+/* css của form create group */
+/* From Uiverse.io by guilhermeyohan */ 
+.login-box {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: #dde1e7;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #000000;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color:#000000;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #000000;
+  font-size: 12px;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #000000;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  margin-top: 40px;
+  letter-spacing: 4px
+}
+
+.button-create {
+  background: #fbca1f;
+  font-family: inherit;
+  padding: 0.6em 1.3em;
+  font-weight: 900;
+  font-size: 18px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+}
+
+.button-create:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.button-create:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}
+
+
+/*FORM THÔNG BÁO */
+
+#chat-container {
+    height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 10px;
+    max-width: 80%;
+}
+
+.message.sent {
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+.message.received {
+    margin-right: auto;
+    justify-content: flex-start;
+}
+
+.message-content {
+    padding: 10px 15px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.message.sent .message-content {
+    background-color: #0084ff;
+    color: white;
+}
+
+.message.received .message-content {
+    background-color: #e4e6eb;
+    color: black;
+}
+
+.message-content p {
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.message-content .time {
+    font-size: 0.75em;
+    opacity: 0.7;
+    margin-top: 5px;
+    display: block;
+}
+
+.message.sent .time {
+    text-align: right;
+}
+
+.message.received .time {
+    text-align: left;
+}
+
+.message.call-history {
+    margin: 10px auto;
+    text-align: center;
+}
+
+.message.call-history .message-content {
+    background-color: #f0f0f0;
+    color: #666;
+    padding: 5px 15px;
+    border-radius: 15px;
+    display: inline-block;
+}
+
+.message.call-history i {
+    margin-right: 5px;
+    color: #0084ff;
+}
+
